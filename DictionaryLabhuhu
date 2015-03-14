@@ -1,0 +1,129 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace DictionaryLab
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            ArrayDictionary d = new ArrayDictionary();
+            d.Insert(123, "Arrow");
+            d.Insert(145, "Box");
+            d.Insert(150, "Life");
+            d.Find(150);
+            d.Find(134);
+            Console.WriteLine("The number of elements: {0}.", d.Size);
+            d.Remove(145);
+            d.Remove(133);
+            d.Find(145);
+            Console.WriteLine("The number of elements: {0}.", d.Size);
+            d.Insert(167, "Tadhana");
+            d.Insert(185, "Ulap");            
+            Console.WriteLine("The number of elements: {0}.", d.Size);
+            // test Insert, Remove, Find, and Size
+            Console.ReadLine();
+        }
+
+        public class Entry
+        {
+            private int key;
+            private object record;
+
+            public int Key
+            {
+                get { return key; }
+                set { key = value; }
+            }
+
+            public object Record
+            {
+                get { return record; }
+                set { record = value; }
+            }
+        }
+
+
+        public class ArrayDictionary
+        {
+            private Entry[] list;
+            private int count;
+
+
+            public ArrayDictionary()
+            {
+                list = new Entry[100];
+                count = 0;
+            }
+
+            public Entry Insert(int k, object o)
+            {
+
+                list[count] = new Entry();
+                list[count].Key = k;
+                list[count].Record = o;
+
+                count++;
+
+                return null;
+            }
+
+            public Entry Find(int k)
+            {
+                bool isFound = false;
+                for (int i = 0; i < count; i++)
+                {
+                    if (k == list[i].Key)
+                        isFound = true;
+                }
+                //for the purpose of checking 
+                if (isFound == true)
+                    Console.WriteLine("Key is found.");
+                else
+                    Console.WriteLine("Key is not found.");
+
+                return null;
+            }
+
+            public Entry Remove(int k)
+            {
+                int index = -1;
+
+                bool isFound = false;
+                for (int i = 0; i < count; i++)
+                {
+                    if (k == list[i].Key)
+                    {
+                        index = i;
+                        isFound = true;
+                    }
+                }
+
+
+                if (isFound == true)
+                {
+                    list[index] = null;
+                    for (int i = index; i < count; i++)
+                    {
+                        list[i] = list[i + 1];
+                    }
+                    count--;
+
+                    Console.WriteLine("Key is removed.");
+                }
+                else
+                    Console.WriteLine("Key is not found.");
+
+                return null;
+            }
+
+            public int Size
+            {
+                get { return count; }
+            }
+
+        }
+    }
+}
